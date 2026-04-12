@@ -121,4 +121,8 @@
     </table>
 
 </body>
+<footer>
+    <p th:text="${'실습 수행 일시: ' + #temporals.format(#temporals.createNow(), 'yyyy년 MM월 dd일 (E) a hh:mm:ss') + '  |  학번: 2371083  |  성명: 이준호'}">
+    </p>
+</footer>
 </html>
