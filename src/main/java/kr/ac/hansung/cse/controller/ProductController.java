@@ -48,9 +48,26 @@ public class ProductController {
     // ─────────────────────────────────────────────────────────────────
 
     @GetMapping
-    public String listProducts(Model model) {
-        List<Product> products = productService.getAllProducts();
+    public String listProducts(@RequestParam(required = false) String keyword,
+                               @RequestParam(required = false) Long categoryId,
+                               Model model) {
+        List<Product> products;
+
+        if(keyword != null && !keyword.isBlank()) {
+            products = productService.searchByName(keyword);
+        }
+        else if(categoryId != null) {
+            products = productService.searchByCategory(categoryId);
+        }
+        else {
+            products = productService.getAllProducts();
+        }
+
         model.addAttribute("products", products);
+        model.addAttribute("categories", productService.getAllProducts());
+        model.addAttribute("keyword", keyword);
+        model.addAttribute("categoryId", categoryId);
+
         return "productList";
     }
 
